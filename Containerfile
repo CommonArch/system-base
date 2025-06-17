@@ -6,7 +6,7 @@ ARG CORE_BRANCH=main
 ARG VARIANT=general
 ARG DESKTOP=nogui
 
-RUN if [ "$VARIANT" != container ]; then install-packages-build linux-zen linux-firmware linux-zen-headers broadcom-wl-dkms; fi
+RUN if [ "$VARIANT" != container ]; then install-packages-build linux-zen linux-firmware linux-zen-headers broadcom-wl-dkms dracut; fi
 
 RUN if [ "$DESKTOP" == gnome ]; then install-packages-build gnome; \
   elif [ "$DESKTOP" == plasma ]; then install-packages-build plasma kde-utilities-meta kde-accessibility-meta; \
@@ -29,6 +29,11 @@ RUN install-packages-build grub efibootmgr
 RUN install-packages-build python-yaml python-click python-fasteners skopeo umoci jq libnotify
 
 COPY overlays/common /
+
+RUN wget -O /usr/bin/system https://github.com/CommonArch/system-cli/refs/heads/main/usr/bin/system; chmod 755 /usr/bin/system; \
+    mkdir -p /usr/lib/dracut/modules.d/10commonarch;
+    wget -O /usr/lib/dracut/modules.d/10commonarch/handle-update.sh https://github.com/CommonArch/system-cli/refs/heads/main/usr/lib/dracut/modules.d/10commonarch/handle-update.sh; chmod 755 /usr/lib/dracut/modules.d/10commonarch/handle-update.sh; \
+    wget -O /usr/lib/dracut/modules.d/10commonarch/module-setup.sh https://github.com/CommonArch/system-cli/refs/heads/main/usr/lib/dracut/modules.d/10commonarch/module-setup.sh; chmod 755 /usr/lib/dracut/modules.d/10commonarch/module-setup.sh
 
 RUN systemctl enable commonarch-update-cleanup
 RUN systemctl enable --global commonarch-update-check
