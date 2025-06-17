@@ -31,7 +31,7 @@ RUN install-packages-build python-yaml python-click python-fasteners skopeo umoc
 COPY overlays/common /
 
 RUN wget -O /usr/bin/system https://github.com/CommonArch/system-cli/refs/heads/main/usr/bin/system; chmod 755 /usr/bin/system; \
-    mkdir -p /usr/lib/dracut/modules.d/10commonarch;
+    mkdir -p /usr/lib/dracut/modules.d/10commonarch; \
     wget -O /usr/lib/dracut/modules.d/10commonarch/handle-update.sh https://github.com/CommonArch/system-cli/refs/heads/main/usr/lib/dracut/modules.d/10commonarch/handle-update.sh; chmod 755 /usr/lib/dracut/modules.d/10commonarch/handle-update.sh; \
     wget -O /usr/lib/dracut/modules.d/10commonarch/module-setup.sh https://github.com/CommonArch/system-cli/refs/heads/main/usr/lib/dracut/modules.d/10commonarch/module-setup.sh; chmod 755 /usr/lib/dracut/modules.d/10commonarch/module-setup.sh
 
