@@ -32,10 +32,8 @@ COPY overlays/common /
 
 ENV CORE_BRANCH=$CORE_BRANCH
 
-RUN wget -O /usr/bin/system https://github.com/CommonArch/system-cli/raw/refs/heads/$CORE_BRANCH/usr/bin/system; chmod 755 /usr/bin/system; \
-    mkdir -p /usr/lib/dracut/modules.d/10commonarch; \
-    wget -O /usr/lib/dracut/modules.d/10commonarch/handle-update.sh https://github.com/CommonArch/system-cli/raw/refs/heads/$CORE_BRANCH/usr/lib/dracut/modules.d/10commonarch/handle-update.sh; chmod 755 /usr/lib/dracut/modules.d/10commonarch/handle-update.sh; \
-    wget -O /usr/lib/dracut/modules.d/10commonarch/module-setup.sh https://github.com/CommonArch/system-cli/raw/refs/heads/$CORE_BRANCH/usr/lib/dracut/modules.d/10commonarch/module-setup.sh; chmod 755 /usr/lib/dracut/modules.d/10commonarch/module-setup.sh
+RUN wget -O cli.zip https://github.com/CommonArch/system-cli/archive/cbffd78c4c353ceb5dde61636d01fc50d074e60d.zip \
+    && unzip cli.zip && mv system-cli-* system-cli && cp -ax system-cli/usr/* /usr && rm -rf system-cli cli.zip
 
 RUN systemctl enable commonarch-update-cleanup
 RUN systemctl enable --global commonarch-update-check
