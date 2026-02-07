@@ -26,7 +26,7 @@ RUN if [ "$VARIANT" == nvidia ]; then install-packages-build nvidia-dkms; fi
 
 RUN install-packages-build grub efibootmgr
 
-RUN install-packages-build python-yaml python-click python-fasteners skopeo umoci jq libnotify wget
+RUN install-packages-build python-yaml python-click python-fasteners skopeo umoci jq libnotify wget zip unzip
 
 COPY overlays/common /
 
